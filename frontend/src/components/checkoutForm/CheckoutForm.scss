@@ -1,0 +1,19 @@
+.payment
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 20px;
+
+    button{
+        width: 100px;
+        height: 45px;
+        border: none;
+        background-color: #dbb42c;
+        color: white;
+        margin-top: 15px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+}
