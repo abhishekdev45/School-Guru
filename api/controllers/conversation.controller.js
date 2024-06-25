@@ -14,6 +14,7 @@ export const createConversation = async (req, res, next) => {
     const savedConversation = await newConversation.save();
     res.status(201).send(savedConversation);
   } catch (err) {
+    console.log(err)
     next(err);
   }
 };

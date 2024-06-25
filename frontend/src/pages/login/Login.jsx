@@ -4,8 +4,8 @@ import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("abhishek");
+  const [password, setPassword] = useState("12345");
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ function Login() {
           type="text"
           placeholder="johndoe"
           onChange={(e) => setUsername(e.target.value)}
+          value="abhishek"
         />
 
         <label htmlFor="">Password</label>
@@ -38,6 +39,7 @@ function Login() {
           name="password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          value="12345"
         />
         <button type="submit">Login</button>
         {error && error}

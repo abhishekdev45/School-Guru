@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
+import axios from "axios";
 
 function Gig() {
   const { id } = useParams();
+  const [conversationId, setConversationId] = useState(null);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
@@ -31,6 +33,28 @@ function Gig() {
       }),
     enabled: !!userId,
   });
+
+  const handleClick = async () => {
+    console.log("object");
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/conversations",
+        {
+          to: userId,
+          // Add any data you need to send to the backend here
+        },
+        {
+          withCredentials: true, // Include cookies in the request
+        }
+      );
+      // Assuming the response contains the conversation ID
+      const id = response.data._id; // Adjust this based on your response structure
+      setConversationId(id);
+    } catch (error) {
+      console.error("Error creating conversation:", error);
+      // Handle error
+    }
+  };
 
   return (
     <div className="gig">
@@ -99,9 +123,15 @@ function Gig() {
                         </span>
                       </div>
                     )}
-                    {/* <Link to={`/messeage/${}`} className="link"> */}
-                    <button>Contact Me</button>
-                    {/* </Link> */}
+                    {conversationId ? (
+                      <Link to={`/message/${conversationId}`} className="link">
+                        <button>Contact Me</button>
+                      </Link>
+                    ) : (
+                      <button onClick={handleClick} disabled={isLoading}>
+                        {isLoading ? "Creating Conversation..." : "Contact Me"}
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className="box">
